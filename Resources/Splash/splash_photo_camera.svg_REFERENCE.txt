@@ -1,0 +1,7 @@
+ file name: photo_camera.svg (splash_photo_camera.svg)
+ author: SVG Repo (https://www.svgrepo.com/)
+ source: https://www.svgrepo.com/svg/246299/photo-camera
+         https://www.svgrepo.com/download/246299/photo-camera.svg
+ license: CC0 1.0 Universal PD Dedication
+		  https://www.svgrepo.com/page/licensing/#CC0
+		  https://creativecommons.org/publicdomain/zero/1.0/deed.en

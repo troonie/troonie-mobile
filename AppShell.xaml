@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell x:Class="TroonieMobile.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:TroonieMobile"
+       Shell.FlyoutBehavior="Flyout"
+       Title="Troonie">
+    <!--Shell.FlyoutBackdrop="Black"-->
+    <ShellContent ContentTemplate="{DataTemplate local:StartPage}"
+                  Route="StartPage"/>
+
+    <Shell.ItemTemplate>
+        <DataTemplate x:Name="DataTemplate_Options">
+            <!--<Grid ColumnDefinitions="0.2*,0.8*">
+                <Image Source="{Binding Icon}"
+                       Margin="5"
+                       HeightRequest="45" />
+                <Label Grid.Column="1"
+                       Text="{Binding Title}"
+                       FontAttributes="Italic"
+                       VerticalTextAlignment="Center" /> 
+            </Grid>
+            <Label Text="Lalala"></Label>-->
+            <Grid x:Name="troonie_Grid">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <!--<Frame x:Name="FrameModus2"
+                       BorderColor="Gray"
+                       Background="AliceBlue"
+                       CornerRadius="5"
+                       Padding="8"
+                       HorizontalOptions="FillAndExpand">
+                    <StackLayout RadioButtonGroup.GroupName="Modes2">
+                        <Label Text="Modea1"
+                               FontSize="14"
+                               FontAttributes="Bold" />
+                        <BoxView Color="Gray"
+                                 HeightRequest="2"
+                                 HorizontalOptions="Fill" />
+                        <RadioButton x:Name="RadioButtonRead2"
+                                     Content="Read2" />
+                        <RadioButton x:Name="RadioButtonWrite2"
+                                     Content="Write2" />
+                    </StackLayout>
+                </Frame>-->
+
+                <Label x:Name="LabelOptions"
+                       Grid.Row="0"
+                       Text="OPTIONS                                              ."
+                       FontSize="14"
+                       FontAttributes="Bold" />
+                
+                <Frame x:Name="FramePayload"
+                       Grid.Row="1"
+                       Background="AliceBlue"
+                       BorderColor="Gray"
+                       CornerRadius="5"
+                       Padding="8">
+                    <StackLayout RadioButtonGroup.GroupName="Payload">
+                        <Label Text="Payload"
+                               FontSize="14"
+                               FontAttributes="Bold" />
+                        <BoxView Color="Gray"
+                                 HeightRequest="2"
+                                 HorizontalOptions="Fill" />
+                        <RadioButton x:Name="RadioButtonPayloadFile"
+                                     Content="File"
+                                     CheckedChanged="RadioButtonPayloadFile_CheckedChanged" />
+                        <RadioButton x:Name="RadioButtonPayloadText"
+                                     Content="Text"
+                                     CheckedChanged="RadioButtonPayloadText_CheckedChanged" />
+                    </StackLayout>
+                </Frame>
+
+                <Frame x:Name="FrameAlgorithm"
+                       Grid.Row="2"
+                       Background="AliceBlue"
+                       BorderColor="Gray"
+                       CornerRadius="5"
+                       Padding="8">
+                    <StackLayout RadioButtonGroup.GroupName="Algorithm">
+                        <Label Text="Algorithm"
+                               FontSize="14"
+                               FontAttributes="Bold" />
+                        <BoxView Color="Gray"
+                                 HeightRequest="2"
+                                 HorizontalOptions="Fill" />
+                        <RadioButton x:Name="RadioButtonLeonStegRGB"
+                                     Content="LeonStegRGB"
+                                     CheckedChanged="RadioButtonLeonStegRGB_CheckedChanged" />
+                        <RadioButton x:Name="RadioButtonLeonSteg"
+                                     Content="LeonSteg"
+                                     CheckedChanged="RadioButtonLeonSteg_CheckedChanged" />
+                    </StackLayout>
+                </Frame>
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+</Shell>

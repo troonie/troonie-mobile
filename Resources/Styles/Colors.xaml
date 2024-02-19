@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
+
+    <Color x:Key="Blue">#0000FF</Color>
+    <Color x:Key="Red">#FF0000</Color>
+    <Color x:Key="Green">
+        <x:Arguments>
+            <x:Int32>0</x:Int32>
+            <x:Int32>255</x:Int32>
+            <x:Int32>0</x:Int32>
+        </x:Arguments>
+    </Color>
+
+    <!--GRID = new GdkColor (191, 219, 255);
+			FONT = new GdkColor (68, 65, 174);
+			AliceBlue = new Gdk.Color (240, 248, 255);
+            Border = new CairoColor (220 / 255.0, 205 / 255.0, 153 / 255.0); -->
+    <Color x:Key="Grid">
+        <x:Arguments>
+            <x:Int32>191</x:Int32>
+            <x:Int32>219</x:Int32>
+            <x:Int32>255</x:Int32>
+        </x:Arguments>
+    </Color>
+
+    <Color x:Key="AliceBlue">
+        <x:Arguments>
+            <x:Int32>240</x:Int32>
+            <x:Int32>248</x:Int32>
+            <x:Int32>255</x:Int32>
+        </x:Arguments>
+    </Color>
+
+    <!-- 226, 241, 250   -->
+    <Color x:Key="TopBtnNormal">#E2F1FA</Color> 
+    <!-- 123, 192, 232   -->
+    <Color x:Key="MiddleBtnNormal">#7BC0E8</Color>
+    <!-- 170, 244, 252   -->
+    <Color x:Key="DownBtnNormal">#AAF4FC</Color>
+    <Color x:Key="FontBtnNormal">
+        <x:Arguments>
+            <x:Int32>68</x:Int32>
+            <x:Int32>65</x:Int32>
+            <x:Int32>174</x:Int32>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="BorderBtnNormal">
+        <x:Arguments>
+            <x:Int32>191</x:Int32>
+            <x:Int32>219</x:Int32>
+            <x:Int32>255</x:Int32>
+        </x:Arguments>
+    </Color>
+
+    <Color x:Key="TopBtnMouseOver">
+        <x:Arguments>
+            <x:Int32>255</x:Int32>
+            <x:Int32>246</x:Int32>
+            <x:Int32>216</x:Int32>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="MiddleBtnMouseOver">
+        <x:Arguments>
+            <x:Int32>255</x:Int32>
+            <x:Int32>213</x:Int32>
+            <x:Int32>77</x:Int32>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="DownBtnMouseOver">
+        <x:Arguments>
+            <x:Int32>255</x:Int32>
+            <x:Int32>233</x:Int32>
+            <x:Int32>155</x:Int32>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="FontBtnMouseOver">
+        <x:Arguments>
+            <x:Int32>21</x:Int32>
+            <x:Int32>66</x:Int32>
+            <x:Int32>139</x:Int32>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="BorderBtnMouseOver">
+        <x:Arguments>
+            <x:Int32>220</x:Int32>
+            <x:Int32>205</x:Int32>
+            <x:Int32>153</x:Int32>
+        </x:Arguments>
+    </Color>
+
+    <Color x:Key="TopBtnPressed">
+        <x:Arguments>
+            <x:Int32>245</x:Int32>
+            <x:Int32>191</x:Int32>
+            <x:Int32>135</x:Int32>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="MiddleBtnPressed">
+        <x:Arguments>
+            <x:Int32>235</x:Int32>
+            <x:Int32>122</x:Int32>
+            <x:Int32>5</x:Int32>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="DownBtnPressed">
+        <x:Arguments>
+            <x:Int32>249</x:Int32>
+            <x:Int32>176</x:Int32>
+            <x:Int32>81</x:Int32>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="FontBtnPressed">
+        <x:Arguments>
+            <x:Int32>114</x:Int32>
+            <x:Int32>65</x:Int32>
+            <x:Int32>107</x:Int32>
+        </x:Arguments>
+    </Color>
+    <Color x:Key="BorderBtnPressed">
+        <x:Arguments>
+            <x:Int32>154</x:Int32>
+            <x:Int32>129</x:Int32>
+            <x:Int32>89</x:Int32>
+        </x:Arguments>
+    </Color>
+
+
+    <Color x:Key="Primary">#512BD4</Color>
+    <Color x:Key="PrimaryDark">#ac99ea</Color>
+    <Color x:Key="PrimaryDarkText">#242424</Color>
+    <Color x:Key="Secondary">#DFD8F7</Color>
+    <Color x:Key="SecondaryDarkText">#9880e5</Color>
+    <Color x:Key="Tertiary">#2B0B98</Color>
+
+    <Color x:Key="White">White</Color>
+    <Color x:Key="Black">Black</Color>
+    <Color x:Key="Magenta">#D600AA</Color>
+    <Color x:Key="MidnightBlue">#190649</Color>
+    <Color x:Key="OffBlack">#1f1f1f</Color>
+
+    <Color x:Key="Gray100">#E1E1E1</Color>
+    <Color x:Key="Gray200">#C8C8C8</Color>
+    <Color x:Key="Gray300">#ACACAC</Color>
+    <Color x:Key="Gray400">#919191</Color>
+    <Color x:Key="Gray500">#6E6E6E</Color>
+    <Color x:Key="Gray600">#404040</Color>
+    <Color x:Key="Gray900">#212121</Color>
+    <Color x:Key="Gray950">#141414</Color>
+
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
+    <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
+    <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>
+    <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"/>
+    <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}"/>
+
+    <SolidColorBrush x:Key="Gray100Brush" Color="{StaticResource Gray100}"/>
+    <SolidColorBrush x:Key="Gray200Brush" Color="{StaticResource Gray200}"/>
+    <SolidColorBrush x:Key="Gray300Brush" Color="{StaticResource Gray300}"/>
+    <SolidColorBrush x:Key="Gray400Brush" Color="{StaticResource Gray400}"/>
+    <SolidColorBrush x:Key="Gray500Brush" Color="{StaticResource Gray500}"/>
+    <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}"/>
+    <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
+    <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
+
+    <RadialGradientBrush x:Key="TestBrush">
+        <GradientStop Color="{StaticResource TopBtnNormal}"
+                          Offset="0.1" />
+        <GradientStop Color="DarkBlue"
+                          Offset="1.0" />
+    </RadialGradientBrush>
+
+    <LinearGradientBrush x:Key="TroonieButtonBrushNormal" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="{StaticResource TopBtnNormal}" Offset="0.1"/>
+        <GradientStop Color="{StaticResource MiddleBtnNormal}" Offset="0.5"/>
+        <!--<GradientStop Color="{StaticResource TroonieBLUE}" Offset="0.9"/>-->
+        <GradientStop Color="{StaticResource DownBtnNormal}" Offset="0.9"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="TroonieButtonBrushMouseOver" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="{StaticResource TopBtnMouseOver}" Offset="0.1"/>
+        <GradientStop Color="{StaticResource MiddleBtnMouseOver}" Offset="0.5"/>
+        <!--<GradientStop Color="{StaticResource TroonieBLUE}" Offset="0.9"/>-->
+        <GradientStop Color="{StaticResource DownBtnMouseOver}" Offset="0.9"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="TroonieButtonBrushPressed" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="{StaticResource TopBtnPressed}" Offset="0.1"/>
+        <GradientStop Color="{StaticResource MiddleBtnPressed}" Offset="0.5"/>
+        <GradientStop Color="{StaticResource DownBtnPressed}" Offset="0.9"/>
+    </LinearGradientBrush>
+
+</ResourceDictionary>

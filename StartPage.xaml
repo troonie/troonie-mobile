@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
+             x:Class="TroonieMobile.StartPage"
+              Title="Troonie Steganography"             
+             Background="{AppThemeBinding Light={StaticResource BorderBtnNormal}, Dark={StaticResource BorderBtnNormal}}">
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.4*" />
+                <RowDefinition />
+                <RowDefinition Height="0.2*" />
+                <RowDefinition />
+                <RowDefinition Height="5*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <skia:SKCanvasView
+              x:Name="skiaView"
+                Grid.Row="0"
+                Grid.ColumnSpan="4"
+                Grid.RowSpan="2"
+              PaintSurface="OnPaintSurface"
+             Background="Black"/>
+            <Button
+                x:Name="BtnOpenImage"
+                Grid.Row="0"
+                Grid.Column="4"
+                Grid.ColumnSpan="3"
+                Text="Open Image" 
+                SemanticProperties.Hint="Opens an image."                
+                HorizontalOptions="Fill"
+                Clicked="BtnOpenImage_Clicked">
+            </Button>
+            <Button
+                x:Name="BtnOptions"
+                Grid.Column="7"
+                Grid.Row="0"
+                ImageSource="{FontImage &#x2699;, FontFamily=Ionicons, Color={StaticResource FontBtnNormal}}"                         
+                SemanticProperties.Hint="Open options."                
+                HorizontalOptions="Fill"
+                Clicked="BtnOptions_Clicked">
+            </Button>
+            <Frame x:Name="FrameModus"
+                   Grid.Column="4"
+                   Grid.ColumnSpan="4"
+                   Grid.Row="1"
+                BorderColor="Gray"
+               CornerRadius="5"
+               Padding="8">
+                <StackLayout RadioButtonGroup.GroupName="Modes">
+                    <Label Text="Mode"
+                       FontSize="14"
+                       FontAttributes="Bold" />
+                    <BoxView Color="Gray"
+                         HeightRequest="2"
+                         HorizontalOptions="Fill" />
+                    <RadioButton x:Name="RadioButtonRead" Content="Read" CheckedChanged="RadioButtonRead_CheckedChanged" />
+                    <RadioButton x:Name="RadioButtonWrite" Content="Write"   />
+                </StackLayout>
+            </Frame>
+
+            <Label x:Name="Space"
+                   Text="Payload space: "
+                   TextColor="{StaticResource FontBtnNormal}"
+                   FontAttributes="Bold"
+                   Grid.Row="2"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="8" />
+            
+            <Frame x:Name="FramePasswordAndOkButton"
+                   Grid.Row="3"
+                   Grid.Column="0"
+                Grid.ColumnSpan="8"        
+                BorderColor="Gray"
+                CornerRadius="5"
+                Padding="8">
+                <StackLayout>
+                    <Label Text="Key"
+           FontSize="14"
+           FontAttributes="Bold" />
+                    <BoxView Color="Gray"
+             HeightRequest="2"
+             HorizontalOptions="Fill" />
+                <Entry
+                        x:Name="EntryPassword"
+                        Placeholder="Password"
+                        IsPassword="True"
+                        BackgroundColor="White">
+                </Entry>
+                    <Button
+                    x:Name="BtnOk"
+                    Text="Ok" 
+                    SemanticProperties.Hint="Starts steganography."
+                    Clicked="OnClickedBtnSteganography">
+                    </Button>
+                </StackLayout>
+            </Frame>            
+
+            <Editor x:Name="PayoadEditor"
+             Grid.Column="0"
+             Grid.ColumnSpan="8"
+            Grid.Row="4"
+            Placeholder="Enter your response here"                    
+            AutoSize="TextChanges"
+            TextChanged="OnEditorTextChanged"/>
+            <!--HeightRequest="222500"/>-->
+
+
+            <Frame x:Name="FrameFileEntryAndFileButton"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="8"
+                   Grid.Row="4"
+                   BorderColor="Red"
+                   CornerRadius="5"
+                   Padding="8"
+                   IsVisible="false">
+                <StackLayout>
+                    <Label Text="File"
+                           FontSize="14"
+                           FontAttributes="Bold" />
+                    <BoxView Color="Gray"
+                             HeightRequest="2"
+                             HorizontalOptions="Fill" />
+                    <Entry x:Name="EntryFile"
+                           Placeholder="File"
+                           BackgroundColor="White"
+                           IsReadOnly="True">
+                    </Entry>
+                    <Button x:Name="BtnFile"
+                            Text="Choose file"
+                            SemanticProperties.Hint="Choose file."
+                            Clicked="BtnFile_Clicked">
+                    </Button>
+                </StackLayout>
+            </Frame>
+        </Grid>
+    </ScrollView>
+</ContentPage>
