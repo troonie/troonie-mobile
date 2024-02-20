@@ -35,10 +35,12 @@ namespace TroonieMobile
         public Color Col_MiddleBtnMouseOver { private set; get; }
         public Color Col_FontBtnNormal { private set; get; }
 
-        public Color Col_BorderBtnNormal { private set; get; }        
-        #endregion
+        public Color Col_BorderBtnNormal { private set; get; }
 
-        private Config()
+        public LinearGradientBrush Col_TroonieButtonBrushNormal { private set; get; }
+    #endregion
+
+    private Config()
         {
             if (Application.Current is App a)
                 App = a;
@@ -71,6 +73,7 @@ namespace TroonieMobile
 
             // dummy values to avoid null in constructor
             Col_MiddleBtnMouseOver = Col_FontBtnNormal = Col_BorderBtnNormal = Colors.Black;
+            Col_TroonieButtonBrushNormal = new LinearGradientBrush();
             InitColors();
         }
 
@@ -84,6 +87,9 @@ namespace TroonieMobile
 
             if (App.Resources.TryGetValue("BorderBtnNormal", out c))
                 Col_BorderBtnNormal = (Color)c;
+
+            if (App.Resources.TryGetValue("TroonieButtonBrushNormal", out c))
+                Col_TroonieButtonBrushNormal = (LinearGradientBrush)c;
         }
 
         public async void ShowSnackbar(string message, string actionButtonText = "Ok", Action? action = null, IView? anchor = null)
@@ -93,10 +99,10 @@ namespace TroonieMobile
                 BackgroundColor = Col_BorderBtnNormal,
                 TextColor = Col_FontBtnNormal,
                 ActionButtonTextColor = Col_FontBtnNormal,
-                CornerRadius = new CornerRadius(10),
-                Font = Microsoft.Maui.Font.SystemFontOfSize(14),
-                ActionButtonFont = Microsoft.Maui.Font.SystemFontOfSize(14),
-                CharacterSpacing = 0.5
+                CornerRadius = new CornerRadius(12),
+                Font = Microsoft.Maui.Font.SystemFontOfSize(14, FontWeight.Semibold),
+                ActionButtonFont = Microsoft.Maui.Font.SystemFontOfSize(18, FontWeight.Heavy),
+                CharacterSpacing = 0d,               
             };
 
             //Action action = async () => await Toast.Make("Snackbar ActionButton Tapped").Show();

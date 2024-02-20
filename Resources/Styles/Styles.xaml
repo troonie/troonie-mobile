@@ -30,8 +30,7 @@
         <Setter Property="FontFamily" Value="OpenSansRegular"/>
         <Setter Property="FontAttributes" Value="Bold"/>
         <Setter Property="FontSize" Value="14"/>
-        <Setter Property="BorderWidth" Value="2"/>
-        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource BorderBtnNormal}, Dark={StaticResource BorderBtnNormal}}"/>
+        <Setter Property="BorderWidth" Value="2" />
         <Setter Property="CornerRadius" Value="8"/>
         <Setter Property="Padding" Value="14,10"/>
         <Setter Property="MinimumHeightRequest" Value="44"/>
@@ -39,16 +38,18 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
-                    <VisualState x:Name="Normal"/>
-                        <!--<VisualState.Setters>
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
                             <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource FontBtnNormal}, Dark={StaticResource FontBtnNormal}}" />
-                            <Setter Property="Background" Value="{AppThemeBinding Light={DynamicResource TroonieButtonBrushNormal}, Dark={StaticResource TroonieButtonBrushNormal}}" />
+                            <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource BorderBtnNormal}, Dark={StaticResource BorderBtnNormal}}" />
+                            <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource TroonieButtonBrushNormal}, Dark={StaticResource TroonieButtonBrushNormal}}" />
                         </VisualState.Setters>
-                    </VisualState>-->
+                    </VisualState>
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
-                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray200}}" />
+                            <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray100}}" />
+                            <Setter Property="Background" Value="{AppThemeBinding Light={DynamicResource TroonieButtonBrushDisabled}, Dark={DynamicResource TroonieButtonBrushDisabled}}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="PointerOver">

@@ -36,6 +36,14 @@
         </x:Arguments>
     </Color>
 
+    <Color x:Key="Background">
+        <x:Arguments>
+            <x:Int32>191</x:Int32>
+            <x:Int32>219</x:Int32>
+            <x:Int32>255</x:Int32>
+        </x:Arguments>
+    </Color>
+
     <!-- 226, 241, 250   -->
     <Color x:Key="TopBtnNormal">#E2F1FA</Color> 
     <!-- 123, 192, 232   -->
@@ -51,8 +59,8 @@
     </Color>
     <Color x:Key="BorderBtnNormal">
         <x:Arguments>
-            <x:Int32>191</x:Int32>
-            <x:Int32>219</x:Int32>
+            <x:Int32>180</x:Int32>
+            <x:Int32>200</x:Int32>
             <x:Int32>255</x:Int32>
         </x:Arguments>
     </Color>
@@ -143,6 +151,8 @@
     <Color x:Key="MidnightBlue">#190649</Color>
     <Color x:Key="OffBlack">#1f1f1f</Color>
 
+    <Color x:Key="Gray10">#F1F1F1</Color>
+    
     <Color x:Key="Gray100">#E1E1E1</Color>
     <Color x:Key="Gray200">#C8C8C8</Color>
     <Color x:Key="Gray300">#ACACAC</Color>
@@ -179,6 +189,18 @@
         <GradientStop Color="{StaticResource MiddleBtnNormal}" Offset="0.5"/>
         <!--<GradientStop Color="{StaticResource TroonieBLUE}" Offset="0.9"/>-->
         <GradientStop Color="{StaticResource DownBtnNormal}" Offset="0.9"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="TroonieButtonBrushDisabled"
+                         StartPoint="0,0"
+                         EndPoint="0,1">
+        <GradientStop Color="{StaticResource TopBtnNormal}"
+                      Offset="0.1" />
+        <GradientStop Color="{StaticResource Gray10}"
+                      Offset="0.5" />
+        <!--<GradientStop Color="{StaticResource TroonieBLUE}" Offset="0.9"/>-->
+        <GradientStop Color="{StaticResource TopBtnNormal}"
+                      Offset="0.9" />
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="TroonieButtonBrushMouseOver" StartPoint="0,0" EndPoint="0,1">

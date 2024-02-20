@@ -39,19 +39,30 @@ namespace TroonieMobile
                 dir.Delete(true);
             }
 
-            //string androidpath = "/storage/emulated/0/Android/data/com.troonie.mobile";
-            //if (Config.I.OS == OS.Android && Directory.Exists(androidpath))
-            //{ 
-            //    di = new DirectoryInfo(androidpath);
-            //    foreach (FileInfo file in di.EnumerateFiles())
-            //    {
-            //        file.Delete();
-            //    }
-            //    foreach (DirectoryInfo dir in di.EnumerateDirectories())
-            //    {
-            //        dir.Delete(true);
-            //    }
-            //}
+            string androidpath = "/storage/emulated/0/Android/data/com.troonie.mobile";
+            if (DeviceInfo.Platform == DevicePlatform.Android && Directory.Exists(androidpath))
+            {
+                di = new DirectoryInfo(androidpath);
+                foreach (FileInfo file in di.EnumerateFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                {
+                    dir.Delete(true);
+                }
+            }
+
+            if (DeviceInfo.Platform == DevicePlatform.Android)
+            {
+                FlyoutIcon = new FontImageSource
+                {
+                    Glyph = "\u2630",
+                    FontFamily = "Ionicons",
+                    Size = 20,
+                    Color = Color.FromRgb(68, 65, 174)
+                };
+            }
         }
 
         private void RadioButtonPayloadText_CheckedChanged(object sender, CheckedChangedEventArgs e)
