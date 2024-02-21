@@ -211,6 +211,14 @@ public partial class StartPage : ContentPage
             bitmapFullpath = photo.FullPath;
             using Stream sourceStream = await photo.OpenReadAsync();
             bitmap = SKBitmap.Decode(sourceStream);
+            if (c.Shell.Downscaling == Downscaling.px1800 &&
+                (bitmap.Height > 1800 || bitmap.Width > 1800) )
+            {
+                bool answer = await DisplayAlert("Question?", "Downscaling the image", "Yes", "No");
+                Debug.WriteLine("Answer: " + answer);
+                if (answer)
+                    bitmap = bitmap.Resize(new SKSizeI(1800, 1800), SKFilterQuality.High);
+            }
             skiaView.InvalidateSurface();
 
             ChangePayloadSpace();

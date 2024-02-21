@@ -4,8 +4,8 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:TroonieMobile"
        Shell.FlyoutBehavior="Flyout"
+       Background="{StaticResource Background}"
        BackgroundColor="{StaticResource Background}"
-       FlyoutHeight="500"
        FlyoutBackgroundColor="{StaticResource Background}"       
        Title="Troonie Mobile">
     <!--Shell.FlyoutBackdrop="Black"-->
@@ -18,6 +18,7 @@
                   RowSpacing="5"
                   Padding="5">
                 <Grid.RowDefinitions>
+                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
@@ -73,8 +74,30 @@
                     </StackLayout>
                 </Frame>
 
-                <Frame x:Name="FrameInfo"
+                <Frame x:Name="FrameDownscaling"
                        Grid.Row="3"
+                       Background="White"
+                       BorderColor="Gray"
+                       CornerRadius="5"
+                       Padding="8">
+                    <StackLayout RadioButtonGroup.GroupName="Downscaling">
+                        <Label Text="Algorithm"
+                               FontSize="14"
+                               FontAttributes="Bold" />
+                        <BoxView Color="Gray"
+                                 HeightRequest="2"
+                                 HorizontalOptions="Fill" />
+                        <RadioButton x:Name="RadioButtonNoDownscaling"
+                                     Content="No downscaling"
+                                     CheckedChanged="RadioButtonNoDownscaling_CheckedChanged" />
+                        <RadioButton x:Name="RadioButtonDownscaling1800"
+                                     Content="1800px length of bigger side"
+                                     CheckedChanged="RadioButtonDownscaling1800_CheckedChanged" />
+                    </StackLayout>
+                </Frame>
+
+                <Frame x:Name="FrameInfo"
+                       Grid.Row="4"
                        Background="White"
                        BorderColor="Gray"
                        CornerRadius="5"

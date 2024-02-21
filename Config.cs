@@ -13,6 +13,14 @@ namespace TroonieMobile
         iOS = 1 << 2, // = 4,
     }
 
+    public enum Downscaling
+    {
+        None = 0,
+        px1400 = 1,
+        px1800 = 2,
+        px2200 = 3,
+    }
+
     public class Config
     {
         private static Config? instance;
