@@ -1,6 +1,4 @@
-using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Storage;
-using Microsoft.Maui.Controls.Compatibility;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
 using System.Diagnostics;
@@ -93,7 +91,19 @@ public partial class StartPage : ContentPage
                 bytes = file;
             }
 
-            /* int error = */ 
+            #region Downscaling image
+            bool answer = await DisplayAlert("Question?", "Downscaling image to save storage space?", "Yes", "No");
+            //Debug.WriteLine("Answer: " + answer);
+            if (answer)
+            {
+                int tW = bitmap.Width;
+                int tH = bitmap.Height;
+                CheckDownscaling(bytes.Length, ref tW, ref tH, !c.Shell.RadioButtonLeonSteg.IsChecked);
+                bitmap = bitmap.Resize(new SKSizeI(tW, tH), SKFilterQuality.High);
+            }
+            #endregion
+
+            /* int error = */
             ls.Write(bitmap, EntryPassword.Text, bytes);
 
             CancellationToken ct = default;
@@ -211,14 +221,6 @@ public partial class StartPage : ContentPage
             bitmapFullpath = photo.FullPath;
             using Stream sourceStream = await photo.OpenReadAsync();
             bitmap = SKBitmap.Decode(sourceStream);
-            if (c.Shell.Downscaling == Downscaling.px1800 &&
-                (bitmap.Height > 1800 || bitmap.Width > 1800) )
-            {
-                bool answer = await DisplayAlert("Question?", "Downscaling the image", "Yes", "No");
-                Debug.WriteLine("Answer: " + answer);
-                if (answer)
-                    bitmap = bitmap.Resize(new SKSizeI(1800, 1800), SKFilterQuality.High);
-            }
             skiaView.InvalidateSurface();
 
             ChangePayloadSpace();
@@ -278,10 +280,9 @@ public partial class StartPage : ContentPage
             int multiplicator = c.Shell.RadioButtonLeonSteg.IsChecked ? 1 : 3;
             int dim = multiplicator * (bitmap.Width * bitmap.Height) / 8 - LeonSteg.LengthEndText;
 
-            // if (!Config.I.IsFileAsPayloadEnabled)
             if (c.Shell.RadioButtonPayloadText.IsChecked) 
             {
-                l = PayoadEditor.Text.Length; // textviewContent.Buffer.Text.Length;               
+                l = PayoadEditor.Text.Length;             
 
                 if (l > dim)
                 {
@@ -292,8 +293,6 @@ public partial class StartPage : ContentPage
                     Space.Text = GetText(l, dim);
                 }
             }
-            // TODO File size
-            //else if (rdBtnEncrypt.Active && File.Exists(hypertextlabelFileChooser.Text))
             else
             {
                 if (file == null)
@@ -314,6 +313,68 @@ public partial class StartPage : ContentPage
                     Space.Text = text;
                 }
             }
+        }
+    }
+
+    private static void CheckDownscaling(int payloadByteCount, ref int width, ref int height, bool isLeonStegRGB)
+    {
+        const int subtrahend = 200;
+        const int minbiggerSideLength = 1200;
+        /* 3 == BitStegRGB,  1 == BitSteg */
+        int multiplicator = isLeonStegRGB ? 3 : 1;
+        int dim = multiplicator * (width * height) / 8 - LeonSteg.LengthEndText;
+        int biggerSideLength = Math.Max(width, height);
+        int tW = width;
+        int tH = height;
+
+        while (dim > payloadByteCount)
+        {
+            tW = width;
+            tH = height;
+            biggerSideLength -= subtrahend;
+            CalcBiggerSideLength(biggerSideLength, ref tW, ref tH);
+            dim = multiplicator * (tW * tH) / 8 - LeonSteg.LengthEndText;
+
+            if (Math.Max(tW, tH) < minbiggerSideLength)
+            { 
+                break;
+            }
+        }
+
+        width = tW;
+        height = tH;
+
+
+        //if (c.Shell.RadioButtonPayloadText.IsChecked)
+        //{
+        //    l = PayoadEditor.Text.Length;
+
+        //    if (l > dim)
+        //    {
+        //        PayoadEditor.Text = PayoadEditor.Text[..dim];
+        //    }
+        //    else
+        //    {
+        //        Space.Text = GetText(l, dim);
+        //    }
+        //}
+    }
+
+    private static void CalcBiggerSideLength(
+    int biggerSideLength,
+    ref int origWidth,
+    ref int origHeight)
+    {
+        float ratio = (float)origWidth / origHeight;
+        if (origWidth > origHeight)
+        {
+            origWidth = biggerSideLength;
+            origHeight = (int)Math.Round(origWidth / ratio);
+        }
+        else
+        {
+            origHeight = biggerSideLength;
+            origWidth = (int)Math.Round(origHeight * ratio);
         }
     }
 
