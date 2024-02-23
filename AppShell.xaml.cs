@@ -4,7 +4,6 @@ namespace TroonieMobile
     public partial class AppShell : Shell
     {
         private bool initRadioButtonPayloadText, initRadioButtonLeonSteg;
-        public Downscaling Downscaling { get; private set; }
         public RadioButton RadioButtonPayloadText { get; private set; }
         //public RadioButton RadioButtonPayloadFile { get; private set; }
         public RadioButton RadioButtonLeonSteg { get; private set; }
@@ -89,22 +88,6 @@ namespace TroonieMobile
                 initRadioButtonLeonSteg = true;
             }
             (CurrentPage as StartPage)?.ChangePayloadSpace();
-        }
-
-        private void RadioButtonNoDownscaling_CheckedChanged(object sender, CheckedChangedEventArgs e)
-        {
-            if (e.Value)
-            { 
-                Downscaling = Downscaling.None;
-            }
-        }
-
-        private void RadioButtonDownscaling1800_CheckedChanged(object sender, CheckedChangedEventArgs e)
-        {
-            if (e.Value)
-            {
-                Downscaling = Downscaling.px1800;
-            }
         }
 
         private void RadioButtonLeonStegRGB_CheckedChanged(object sender, CheckedChangedEventArgs e)

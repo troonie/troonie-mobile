@@ -4,7 +4,7 @@
              xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
              x:Class="TroonieMobile.StartPage"
               Title="Troonie Steganography"
-             Background="{StaticResource Background}">
+             BackgroundColor="{StaticResource Background}">
     <ScrollView>
         <Grid RowSpacing="3">
             <Grid.RowDefinitions>

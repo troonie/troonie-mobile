@@ -13,12 +13,11 @@ namespace TroonieMobile
         iOS = 1 << 2, // = 4,
     }
 
-    public enum Downscaling
+    public enum DisplayAlertButtonText
     {
-        None = 0,
-        px1400 = 1,
-        px1800 = 2,
-        px2200 = 3,
+        Ok = 0,
+        YesNo = 1,
+        OkCancel = 2
     }
 
     public class Config
@@ -110,12 +109,33 @@ namespace TroonieMobile
                 CornerRadius = new CornerRadius(12),
                 Font = Microsoft.Maui.Font.SystemFontOfSize(14, FontWeight.Semibold),
                 ActionButtonFont = Microsoft.Maui.Font.SystemFontOfSize(18, FontWeight.Heavy),
-                CharacterSpacing = 0d,               
+                CharacterSpacing = 0d,
             };
 
-            //Action action = async () => await Toast.Make("Snackbar ActionButton Tapped").Show();
             var snackbar = Snackbar.Make(message, action, actionButtonText, TimeSpan.FromSeconds(2), options, anchor);
             await snackbar.Show(CancellationToken.None);
+        }
+
+        public static async Task<bool> ShowDisplayAlert(Page page, string title, string message, DisplayAlertButtonText displayAlertButtonText)
+        {
+            string yes, no;
+            
+            switch (displayAlertButtonText)
+            {
+                case DisplayAlertButtonText.Ok: 
+                    no = "Ok";
+                    await page.DisplayAlert(title, message, no);
+                    return false;
+                case DisplayAlertButtonText.OkCancel: yes = "Ok"; no = "Cancel"; break;
+                case DisplayAlertButtonText.YesNo:
+                default:
+                    yes = "Yes"; no = "No";
+                    break;
+
+            }
+
+            bool answer = await page.DisplayAlert(title, message, yes, no);
+            return answer;
         }
     }
 }

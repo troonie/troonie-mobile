@@ -39,7 +39,6 @@ public partial class StartPage : ContentPage
 
     ~StartPage()
     {
-        c.ShowSnackbar($"Troonie is closed.");
         timer.Stop();
     }
 
@@ -54,13 +53,13 @@ public partial class StartPage : ContentPage
     {
         if (bitmap == null)
         {
-            c.ShowSnackbar("Please open an image first.");
+            await Config.ShowDisplayAlert(this, "Open image", "Please open an image first.", DisplayAlertButtonText.Ok);
             return;
         }
 
         if (EntryPassword.Text == null || EntryPassword.Text.Length < 4)
         {
-            c.ShowSnackbar("Password too short.");
+            await Config.ShowDisplayAlert(this, "Password too short", "Please enter a longer Password.", DisplayAlertButtonText.Ok);
             return;
         }
 
@@ -78,13 +77,13 @@ public partial class StartPage : ContentPage
             {
                 if (file == null)
                 {
-                    c.ShowSnackbar("Please select file to encrypt first.");
+                    await Config.ShowDisplayAlert(this, "Select file", "Please select a file to encrypt first.", DisplayAlertButtonText.Ok);
                     return;
                 }
 
                 if (IsImageSizeTooSmall)
                 {
-                    c.ShowSnackbar("Image too small. Please open image with taller width and height.");
+                    await Config.ShowDisplayAlert(this, "Image too small", "Please open an image with bigger width and height.", DisplayAlertButtonText.Ok);
                     return;
                 }
                 
@@ -92,7 +91,8 @@ public partial class StartPage : ContentPage
             }
 
             #region Downscaling image
-            bool answer = await DisplayAlert("Question?", "Downscaling image to save storage space?", "Yes", "No");
+            bool answer = await Config.ShowDisplayAlert(this, "Downscaling image", 
+                "Should Troonie downscale the image to reduce needed storage space for saving?", DisplayAlertButtonText.YesNo);
             //Debug.WriteLine("Answer: " + answer);
             if (answer)
             {
@@ -125,11 +125,15 @@ public partial class StartPage : ContentPage
 
             if (fileSaveResult.IsSuccessful)
             {
-                c.ShowSnackbar($"Steg-Image is saved: {fileSaveResult.FilePath}");
+                await Config.ShowDisplayAlert(this, "Success", $"Steg-Image is saved: {fileSaveResult.FilePath}", DisplayAlertButtonText.Ok);
+            }
+            else if (c.OS == OS.Android) // && File.Exists(fileSaveResult.FilePath)) 
+            {
+                await Config.ShowDisplayAlert(this, "Success (Android)", $"Steg-Image is saved: {fileSaveResult.FilePath}", DisplayAlertButtonText.Ok);
             }
             else
             {
-                c.ShowSnackbar($"Error: Steg-Image is not saved, {fileSaveResult.Exception.Message}");
+                await Config.ShowDisplayAlert(this, "Error", $"Error: Steg-Image is not saved, {fileSaveResult.Exception.Message}", DisplayAlertButtonText.Ok);
             }
 
         }
@@ -139,7 +143,7 @@ public partial class StartPage : ContentPage
 
             if (ls.CancelToken)
             {
-                c.ShowSnackbar($"Error: Reading process is aborted. No result.");
+                await Config.ShowDisplayAlert(this, "Error", "Reading process is aborted. No result.", DisplayAlertButtonText.Ok);
             }
             else
             {
@@ -154,11 +158,11 @@ public partial class StartPage : ContentPage
                     FileSaverResult fileSaveResult = await FileSaver.Default.SaveAsync("result.pdf", stream, ct);
                     if (fileSaveResult.IsSuccessful)
                     {
-                        c.ShowSnackbar($"File is saved: {fileSaveResult.FilePath}");
+                        await Config.ShowDisplayAlert(this, "Success", $"File is saved: {fileSaveResult.FilePath}", DisplayAlertButtonText.Ok);
                     }
                     else
                     {
-                        c.ShowSnackbar($"Error: File is not saved, {fileSaveResult.Exception.Message}");
+                        await Config.ShowDisplayAlert(this, "Error", $"File is not saved, {fileSaveResult.Exception.Message}", DisplayAlertButtonText.Ok);
                     }
                 }
                 
@@ -171,7 +175,7 @@ public partial class StartPage : ContentPage
         
     }
 
-    private void OnEditorTextChanged(object sender, EventArgs e)
+    private async void OnEditorTextChanged(object sender, EventArgs e)
     {
         if (bitmap == null)
         {
@@ -180,8 +184,7 @@ public partial class StartPage : ContentPage
             if (timer.ElapsedMilliseconds > 3000)
             {
                 timer.Restart();
-
-                c.ShowSnackbar("Please open an image first.");
+                await Config.ShowDisplayAlert(this, "Open image", "Please open an image first.", DisplayAlertButtonText.Ok);
             }
         }
 
@@ -245,7 +248,7 @@ public partial class StartPage : ContentPage
             {
                 s.Close();
                 s.Dispose();
-                c.ShowSnackbar("File is too big (>20mb). Please choose smaller file.");
+                await Config.ShowDisplayAlert(this, "File too big", "File is too big (>20mb). Please choose smaller file.", DisplayAlertButtonText.Ok);
                 return;
             }
 
@@ -319,7 +322,7 @@ public partial class StartPage : ContentPage
     private static void CheckDownscaling(int payloadByteCount, ref int width, ref int height, bool isLeonStegRGB)
     {
         const int subtrahend = 200;
-        const int minbiggerSideLength = 1200;
+        const int minbiggerSideLength = 1400;
         /* 3 == BitStegRGB,  1 == BitSteg */
         int multiplicator = isLeonStegRGB ? 3 : 1;
         int dim = multiplicator * (width * height) / 8 - LeonSteg.LengthEndText;
@@ -343,21 +346,6 @@ public partial class StartPage : ContentPage
 
         width = tW;
         height = tH;
-
-
-        //if (c.Shell.RadioButtonPayloadText.IsChecked)
-        //{
-        //    l = PayoadEditor.Text.Length;
-
-        //    if (l > dim)
-        //    {
-        //        PayoadEditor.Text = PayoadEditor.Text[..dim];
-        //    }
-        //    else
-        //    {
-        //        Space.Text = GetText(l, dim);
-        //    }
-        //}
     }
 
     private static void CalcBiggerSideLength(
