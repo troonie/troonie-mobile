@@ -6,11 +6,24 @@
        Shell.FlyoutBehavior="Flyout"
        BackgroundColor="{StaticResource Background}"
        FlyoutBackgroundColor="{StaticResource Background}"       
-       Title="Troonie Mobile">
+       Title="Troonie Mobile" >
     <!--Shell.FlyoutBackdrop="Black"-->
     <ShellContent ContentTemplate="{DataTemplate local:StartPage}"
                   Route="StartPage"/>
-
+    <!--<Shell.TitleView Name="ShellTitleView">
+        <Grid VerticalOptions="Fill"
+              HorizontalOptions="Fill" 
+              BackgroundColor="{StaticResource Background}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Label x:Name="ShellTitleLabel"
+                   Grid.Row="0"
+                   Text=" ShellTitleLabel "
+                   TextColor="{StaticResource FontBtnNormal}"/>
+        </Grid>
+    </Shell.TitleView>-->
     <Shell.ItemTemplate>
         <DataTemplate x:Name="DataTemplate_Options">
             <Grid x:Name="troonie_Grid"

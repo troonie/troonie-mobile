@@ -8,6 +8,7 @@ namespace TroonieMobile;
 
 public partial class StartPage : ContentPage
 {
+    bool firstTap = true;
     private bool IsImageSizeTooSmall;
     private string bitmapFilename;
 #pragma warning disable IDE0052
@@ -42,14 +43,9 @@ public partial class StartPage : ContentPage
         timer.Stop();
     }
 
+    #region Button Clicked events
 
-    private void RadioButtonRead_CheckedChanged(object sender, CheckedChangedEventArgs e)
-    {
-        if (FrameFileEntryAndFileButton != null)
-            FrameFileEntryAndFileButton.IsEnabled = !e.Value;
-    }
-
-    private async void OnClickedBtnSteganography(object sender, EventArgs e)
+    private async void Clicked_BtnSteganography(object sender, EventArgs e)
     {
         if (bitmap == null)
         {
@@ -129,7 +125,7 @@ public partial class StartPage : ContentPage
             }
             else if (c.OS == OS.Android) // && File.Exists(fileSaveResult.FilePath)) 
             {
-                await Config.ShowDisplayAlert(this, "Success (Android)", $"Steg-Image is saved: {fileSaveResult.FilePath}", DisplayAlertButtonText.Ok);
+                await Config.ShowDisplayAlert(this, "Success", $"Steg-Image is saved.", DisplayAlertButtonText.Ok);
             }
             else
             {
@@ -175,46 +171,7 @@ public partial class StartPage : ContentPage
         
     }
 
-    private async void OnEditorTextChanged(object sender, EventArgs e)
-    {
-        if (bitmap == null)
-        {
-            PayoadEditor.Text = string.Empty;
-
-            if (timer.ElapsedMilliseconds > 3000)
-            {
-                timer.Restart();
-                await Config.ShowDisplayAlert(this, "Open image", "Please open an image first.", DisplayAlertButtonText.Ok);
-            }
-        }
-
-        ChangePayloadSpace();
-    }
-
-    //private void OnEditorCompleted(object sender, EventArgs e)
-    //{
-    //}
-
-    private void OnPaintSurface(object sender, SKPaintSurfaceEventArgs args)
-    {
-        SKImageInfo info = args.Info;
-        SKSurface surface = args.Surface;
-        SKCanvas canvas = surface.Canvas;
-        canvas.Clear();
-
-        if (bitmap != null)
-        {
-            SKRect r = new(0, 0, info.Width, info.Height);
-            canvas.DrawBitmap(bitmap, r);
-        }
-
-        //float x = (info.Width - bitmap.Width) / 2;
-        //float y = (info.Height - bitmap.Height) / 2;
-
-        //canvas.DrawBitmap(bitmap, x, y);
-    }
-
-    private async void BtnOpenImage_Clicked(object sender, EventArgs e)
+    private async void Clicked_BtnOpenImage(object sender, EventArgs e)
     {
         FileResult photo = await MediaPicker.Default.PickPhotoAsync();
 
@@ -224,19 +181,32 @@ public partial class StartPage : ContentPage
             bitmapFullpath = photo.FullPath;
             using Stream sourceStream = await photo.OpenReadAsync();
             bitmap = SKBitmap.Decode(sourceStream);
-            skiaView.InvalidateSurface();
+            SkiaViewImage.InvalidateSurface();
 
             ChangePayloadSpace();
-            Title = bitmapFilename;            
+            Title = bitmapFilename;
         }
     }
-
-    private void BtnOptions_Clicked(object sender, EventArgs e)
+    
+    private void Clicked_BtnOptions(object sender, EventArgs e)
     {
+        if (firstTap)
+        {
+            //await Config.ShowDisplayAlert(this, "Options", c.Shell.FlyoutIsPresented.ToString(), DisplayAlertButtonText.Ok);
+            c.Shell.FlyoutIsPresented = true;
+
+            // The workaround is to add the following ugly line after setting the FlyoutIsPresented to true :
+            // Added + 1 to force the update of the layout
+            Shell.Current.CurrentPage.Layout(new Rect(0, 0, Shell.Current.CurrentPage.Width + 1, Shell.Current.CurrentPage.Height + 1));
+
+            firstTap = false;
+            return;
+        }
+
         c.Shell.FlyoutIsPresented = !c.Shell.FlyoutIsPresented;
     }
 
-    private async void BtnFile_Clicked(object sender, EventArgs e)
+    private async void Clicked_BtnFile(object sender, EventArgs e)
     {
         PickOptions options = new() { PickerTitle = "Select file to encrypt." };
         var result = await FilePicker.Default.PickAsync(options);
@@ -263,6 +233,56 @@ public partial class StartPage : ContentPage
             ChangePayloadSpace();
         }
     }
+
+    #endregion Button Clicked events
+
+    #region Other events
+    private void CheckedChanged_RadioButtonRead(object sender, CheckedChangedEventArgs e)
+    {
+        if (FrameFileEntryAndFileButton != null)
+            FrameFileEntryAndFileButton.IsEnabled = !e.Value;
+    }
+
+    private async void TextChanged_PayoadEditor(object sender, EventArgs e)
+    {
+        if (bitmap == null)
+        {
+            PayoadEditor.Text = string.Empty;
+
+            if (timer.ElapsedMilliseconds > 3000)
+            {
+                timer.Restart();
+                await Config.ShowDisplayAlert(this, "Open image", "Please open an image first.", DisplayAlertButtonText.Ok);
+            }
+        }
+
+        ChangePayloadSpace();
+    }
+
+    //private void OnEditorCompleted(object sender, EventArgs e)
+    //{
+    //}
+
+    private void PaintSurface_SkiaViewImage(object sender, SKPaintSurfaceEventArgs args)
+    {
+        SKImageInfo info = args.Info;
+        SKSurface surface = args.Surface;
+        SKCanvas canvas = surface.Canvas;
+        canvas.Clear();
+
+        if (bitmap != null)
+        {
+            SKRect r = new(0, 0, info.Width, info.Height);
+            canvas.DrawBitmap(bitmap, r);
+        }
+
+        //float x = (info.Width - bitmap.Width) / 2;
+        //float y = (info.Height - bitmap.Height) / 2;
+
+        //canvas.DrawBitmap(bitmap, x, y);
+    }
+
+    #endregion Other events
 
     public void ChangeVisibilityOfPayloadObjects(bool isTextVisible)
     {
@@ -319,33 +339,36 @@ public partial class StartPage : ContentPage
         }
     }
 
+    #region Private static helper functions
+
     private static void CheckDownscaling(int payloadByteCount, ref int width, ref int height, bool isLeonStegRGB)
     {
         const int subtrahend = 200;
         const int minbiggerSideLength = 1400;
         /* 3 == BitStegRGB,  1 == BitSteg */
         int multiplicator = isLeonStegRGB ? 3 : 1;
-        int dim = multiplicator * (width * height) / 8 - LeonSteg.LengthEndText;
         int biggerSideLength = Math.Max(width, height);
         int tW = width;
+        int origW = width;
         int tH = height;
+        int origH = height;
 
-        while (dim > payloadByteCount)
+        while (true)
         {
-            tW = width;
-            tH = height;
+            tW = origW;
+            tH = origH;
             biggerSideLength -= subtrahend;
             CalcBiggerSideLength(biggerSideLength, ref tW, ref tH);
-            dim = multiplicator * (tW * tH) / 8 - LeonSteg.LengthEndText;
 
-            if (Math.Max(tW, tH) < minbiggerSideLength)
-            { 
+            if (Math.Max(tW, tH) < minbiggerSideLength ||
+                multiplicator * (tW * tH) / 8 - LeonSteg.LengthEndText < payloadByteCount)
+            {
                 break;
             }
-        }
 
-        width = tW;
-        height = tH;
+            width = tW;
+            height = tH;
+        }
     }
 
     private static void CalcBiggerSideLength(
@@ -388,5 +411,6 @@ public partial class StartPage : ContentPage
 
         return text;
     }
-    
+
+    #endregion Private static helper functions
 }

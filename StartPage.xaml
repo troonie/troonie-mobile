@@ -25,11 +25,11 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <skia:SKCanvasView
-              x:Name="skiaView"
+              x:Name="SkiaViewImage"
                 Grid.Row="0"
                 Grid.ColumnSpan="4"
                 Grid.RowSpan="2"
-              PaintSurface="OnPaintSurface"
+              PaintSurface="PaintSurface_SkiaViewImage"
              BackgroundColor="Black"/>
             <Button
                 x:Name="BtnOpenImage"
@@ -39,16 +39,17 @@
                 Text="Open Image" 
                 SemanticProperties.Hint="Opens an image."                
                 HorizontalOptions="Fill"
-                Clicked="BtnOpenImage_Clicked">
+                Clicked="Clicked_BtnOpenImage">
             </Button>
+            <!--Zahnrad "&#x2699;"   Hamburger "&#x2630;" und "&#x2261;"   -->
             <Button
                 x:Name="BtnOptions"
                 Grid.Column="7"
-                Grid.Row="0"
-                ImageSource="{FontImage &#x2699;, FontFamily=Ionicons, Color={StaticResource FontBtnNormal}, Size=15}"                         
+                    Grid.Row="0"
+                ImageSource="{FontImage &#x2630;, FontFamily=Ionicons, Color={StaticResource FontBtnNormal}, Size=18}"                         
                 SemanticProperties.Hint="Open options."                
                 HorizontalOptions="Fill"
-                Clicked="BtnOptions_Clicked">
+                Clicked="Clicked_BtnOptions">
             </Button>
             <Frame x:Name="FrameModus"
                    Grid.Column="4"
@@ -63,7 +64,7 @@
                     <BoxView Color="Gray"
                          HeightRequest="2"
                          HorizontalOptions="Fill" />
-                    <RadioButton x:Name="RadioButtonRead" Content="Read" CheckedChanged="RadioButtonRead_CheckedChanged" />
+                    <RadioButton x:Name="RadioButtonRead" Content="Read" CheckedChanged="CheckedChanged_RadioButtonRead" />
                     <RadioButton x:Name="RadioButtonWrite" Content="Write"   />
                 </StackLayout>
             </Frame>
@@ -99,7 +100,7 @@
                     x:Name="BtnOk"
                     Text="Ok" 
                     SemanticProperties.Hint="Starts steganography."
-                    Clicked="OnClickedBtnSteganography">
+                    Clicked="Clicked_BtnSteganography">
                     </Button>
                 </StackLayout>
             </Frame>            
@@ -111,7 +112,7 @@
             BackgroundColor="White"
             Placeholder="Enter your response here"                    
             AutoSize="TextChanges"
-            TextChanged="OnEditorTextChanged"/>
+            TextChanged="TextChanged_PayoadEditor"/>
             <!--HeightRequest="222500"/>-->
 
 
@@ -138,7 +139,7 @@
                     <Button x:Name="BtnFile"
                             Text="Choose file"
                             SemanticProperties.Hint="Choose file."
-                            Clicked="BtnFile_Clicked">
+                            Clicked="Clicked_BtnFile">
                     </Button>
                 </StackLayout>
             </Frame>

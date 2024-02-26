@@ -12,7 +12,6 @@ namespace TroonieMobile
         public AppShell()
         {
             InitializeComponent();
-
             RadioButtonPayloadText = new RadioButton();
             //RadioButtonPayloadFile = new RadioButton();
             RadioButtonLeonSteg = new RadioButton();
